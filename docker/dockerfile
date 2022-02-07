@@ -1,0 +1,40 @@
+FROM Ubuntu
+
+RUN apt-get update
+RUN apt-get install python
+
+RUN pip install flask
+RUN pip install flask-mysql
+
+COPY . /opt/source-code
+ 
+ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
+
+
+CMD command param1
+
+CMD ["command","param1"]
+
+
+#for example
+
+CMD sleep 5
+
+CMD ["sleep","5"]
+
+ENTRYPOINT [ "sleep" ]
+
+#CMD is the command that is run when the dockerfile/image is ran(container is created)
+
+#ENTRYPOINT is the keyword typed by the user to run the command the keyword presents followed by a given parameter
+
+#for example
+
+#ENTRYPOINT ["eat"]
+
+#docker run image-name food == docker run image-name eat food(if using CMD instead of ENTRYPOINT)
+
+
+#ENTRYPOINT ["sleep"]
+#CMD ["5"]
+#if no parameter is provided when running the image then "sleep 5"dddddd is the default command that will be ran

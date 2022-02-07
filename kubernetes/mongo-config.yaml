@@ -1,0 +1,8 @@
+#THIS MUST EXIST BEFORE DEPLOYMENTS
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+data:
+  mongo-url: mongo-service

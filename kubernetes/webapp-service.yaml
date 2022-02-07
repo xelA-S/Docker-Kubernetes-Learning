@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  type: NodePort #NodePort is an external service type allowing external access. ClusterIP is the default type and is an internal service
+  selector: #used to select pods to forward the requests to
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 3000 # this sets the port of the service
+      targetPort: 3000 #port of pod that belong to the service, target port should always be the same as the container port
+      nodePort: 30100 #this exposes the Service on each Node's IP and the specified point. Must be between 30000-32767

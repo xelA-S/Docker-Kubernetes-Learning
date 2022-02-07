@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  selector: #used to select pods to forward the requests to
+    app: mongo
+  ports:
+    - protocol: TCP
+      port: 27017 # this sets the port of the service
+      targetPort: 27017 #port of pod that belong to the service, target port should always be the same as the container port

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment # should use stateful set since mongoDB is a database(which has a state)
+metadata:
+  name: mongo-deployment
+  labels: #labels are a key value pair which can be attached to any kubernetes component
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels: # match labels is used to tell the deployment which pods is relevant, for example: all the pods that have the label "app: nginx" are related to deployment
+      app: mongo
+  template: #a template species all the data and information relating to a pod within the cluster, usually 1 pod
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:5.0
+        ports:
+        - containerPort: 27017 #mongoDB listens on port 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom: #this tells kubernetes to find a value from the location specified below
+            secretKeyRef:
+              name: mongo-secret #looks for a Secret with name "mongo-secret"
+              key: mongo-user #takes the value of the data with name "mongo-user" within the Secret config
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-password
+--- # 3 dashes are used to separate yaml configuarations
